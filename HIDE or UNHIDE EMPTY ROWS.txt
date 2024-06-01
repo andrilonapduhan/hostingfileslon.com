@@ -1,0 +1,72 @@
+HIDE/UNHIDE EMPTY ROWS: 
+
+DON'T FORGET TO NAME THE BUTTON BEFORE CREATING A MACRO
+
+HIDE BLANK ROWS:
+
+FIRST: MAKE AN IDENTIFIER BY FOLLOWING THIS FORMULA
+
+=IF(A1="","0","1")
+
+SECOND: CREATE A MODULE 1, THEN ENTER THIS CODE
+
+Sub HideRow()
+Dim isfLastRow As Long
+Dim isfCounter As Long
+
+    Application.ScreenUpdating = False
+    Application.Calculation = xlCalculationManual
+    Application.EnableEvents = False
+    
+    With ActiveSheet
+    
+    .Shapes("HideButton").Visible = True
+    
+    isfLastRow = .Range("A10000").End(xlUp).Row
+    For isfCounter = 5 To isfLastRow
+        If .Cells(isfCounter, "A").Value = 0 Then
+            .Cells(isfCounter, "A").EntireRow.Hidden = True
+        End If
+    Next isfCounter
+    .Range("A1").Select
+    
+    End With
+    
+    Application.EnableEvents = True
+    Application.Calculation = xlCalculationAutomatic
+    Application.ScreenUpdating = True
+    
+
+End Sub
+
+
+SHOW BLANK ROWS:
+
+WITH THIS SAME SHEET, CREATE ANOTHER MODULE 2 THEN ENTER THIS CODE
+
+Sub ShowRow()
+Dim isfLastRow As Long
+Dim isfCounter As Long
+
+    Application.ScreenUpdating = False
+    Application.Calculation = xlCalculationManual
+    Application.EnableEvents = False
+    
+    With ActiveSheet
+    
+    .Shapes("ShowButton").Visible = True  ' Assuming you have a shape named "ShowButton"
+    
+    isfLastRow = .Range("A10000").End(xlUp).Row
+    For isfCounter = 5 To isfLastRow
+        .Rows(isfCounter).Hidden = False
+    Next isfCounter
+    .Range("A1").Select
+    
+    End With
+    
+    Application.EnableEvents = True
+    Application.Calculation = xlCalculationAutomatic
+    Application.ScreenUpdating = True
+    
+End Sub
+
